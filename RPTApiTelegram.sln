@@ -3,12 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPTApiTelegram", "RPTApiTelegrammWrapper\RPTApiTelegram.csproj", "{2B48DD08-8479-4714-B97F-96C34DBBDC50}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E963F63B-C900-4D41-A90B-083CFA7336CE}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPTApiTelegram", "RPTApiTelegramm\RPTApiTelegram.csproj", "{2B48DD08-8479-4714-B97F-96C34DBBDC50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
