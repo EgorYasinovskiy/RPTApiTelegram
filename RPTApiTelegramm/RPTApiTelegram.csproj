@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Post\" />
-    <Folder Include="DataBase\" />
+    <Folder Include="Telegram\Commands\" />
   </ItemGroup>
 
 </Project>
