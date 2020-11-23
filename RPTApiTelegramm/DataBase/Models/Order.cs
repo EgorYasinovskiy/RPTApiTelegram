@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RPTApiTelegram.DataBase.Models
+namespace RPTApi.DataBase.Models
 {
     public class Order
     {   

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RPTApiTelegram.DataBase.Models
+namespace RPTApi.DataBase.Models
 {
     public class Record
     {
