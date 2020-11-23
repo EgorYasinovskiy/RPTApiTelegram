@@ -6,6 +6,7 @@ namespace RPTApi.DataBase.Models
 {
     public class Order
     {   
+        public string Name { get; set; }
         public string Barcode { get; set; }
         public DateTime StartTracking { get; set; }
         public virtual List<Record> Records { get; set; }

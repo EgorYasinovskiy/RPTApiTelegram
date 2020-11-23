@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <Folder Include="Post\" />
+    <Folder Include="Telegram\Enum\" />
+    <Folder Include="Telegram\Keyboards\Inline\" />
   </ItemGroup>
 
 </Project>

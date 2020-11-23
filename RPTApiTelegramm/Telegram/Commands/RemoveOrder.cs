@@ -5,12 +5,11 @@ using Telegram.Bot;
 
 namespace RPTApi.Telegram.Commands
 {
-    public class Track : ICommand
-
+    public class DeleteeOrder : ICommand
     {
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }  
+        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public void Execute(string messsageText,TelegramBotClient client)
+        public void Execute(string messsageText, TelegramBotClient client)
         {
             throw new NotImplementedException();
         }
