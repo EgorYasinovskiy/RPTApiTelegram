@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RPTApi.Interfaces
+﻿namespace RPTApi.Interfaces
 {
     /// <summary>
     /// Interface for bots to add Discord, Vk etc. bots without new architecture.
@@ -24,6 +20,7 @@ namespace RPTApi.Interfaces
         /// </summary>
         /// <param name="barcode"></param>
         public void DeleteOrder(string barcode);
+        
 
     }
 }
