@@ -5,7 +5,7 @@ using Telegram.Bot;
 
 namespace RPTApi.Telegram.Commands
 {
-    public class Track : ICommand
+    public class TrackOrder : ICommand
 
     {
         public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }  
