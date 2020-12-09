@@ -2,6 +2,7 @@
 {
     public class Worker : Interfaces.IBotWorker
     {
+
         public void DeleteOrder(string barcode)
         {
             //TODO: Impliment a method to delete Order from user's orders list.

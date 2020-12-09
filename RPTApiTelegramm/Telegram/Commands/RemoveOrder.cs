@@ -5,7 +5,7 @@ using Telegram.Bot;
 
 namespace RPTApi.Telegram.Commands
 {
-    public class DeleteeOrder : ICommand
+    public class RemoveOrder : ICommand
     {
         public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
