@@ -6,7 +6,7 @@ namespace RPTApi.Helpers
 {
     public class Config
     {
-        public string ConnectionString { get; set; }
+        public string DataBaseFileName { get; set; }
         public string BotKey { get; set; }
     }
 }
