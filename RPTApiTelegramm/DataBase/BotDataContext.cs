@@ -14,8 +14,8 @@ namespace RPTApi.DataBase
         public DbSet<Models.Record> Records { get; set; }
         public BotDataContext(Helpers.Config config)
         {
-            Database.EnsureCreated();
             dbFileName = config.DataBaseFileName;
+            Database.EnsureCreated();
         }
         public BotDataContext()
         {
@@ -23,7 +23,7 @@ namespace RPTApi.DataBase
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"FileName={dbFileName ?? "botData.db"}");
+            optionsBuilder.UseSqlite($"Filename={dbFileName ?? "botData.db"}");
         }
     }
 }
