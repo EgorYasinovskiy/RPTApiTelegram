@@ -8,5 +8,7 @@ namespace RPTApi.Helpers
     {
         public string DataBaseFileName { get; set; }
         public string BotKey { get; set; }
+        public string RuPostApiLogin { get; set; }
+        public string RuPostApiPassword { get; set; }
     }
 }

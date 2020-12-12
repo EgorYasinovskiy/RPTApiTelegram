@@ -12,18 +12,18 @@ namespace DataBase_Tests
         public void Setup()
         {
             cfg = new RPTApi.Helpers.Config() { DataBaseFileName = "botDataBase.db" };
-            //File.Delete(cfg.DataBaseFileName);
+            File.Delete(cfg.DataBaseFileName);
         }
 
         [Test]
-        public void DB_EXISTS_FALSE_FALSE()
+        public void Вb_Exists_False()
         {
             bool expected = false;
             bool actual = File.Exists(cfg.DataBaseFileName);
             Assert.AreEqual(expected, actual);
         }
         [Test]
-        public void DB_CREATED_TRUE_TRUE()
+        public void Db_Created_True()
         {
             RPTApi.DataBase.BotDataContext context = new RPTApi.DataBase.BotDataContext(cfg);
             context.Dispose();
@@ -32,18 +32,39 @@ namespace DataBase_Tests
             Assert.AreEqual(expected, actual);
         }
         [Test]
-        public void DB_RETURNS_DATES_TRUE()
+        public void Db_ReturnUser_NotNull()
         {
-            var dt = DateTime.Now;
             RPTApi.DataBase.BotDataContext context = new RPTApi.DataBase.BotDataContext(cfg);
-            context.Users.Add(new RPTApi.DataBase.Models.BotUser() { Id=1234,LastQuerry=dt, Orders = new System.Collections.Generic.List<RPTApi.DataBase.Models.Order>()});
+            context.Users.Add(new RPTApi.DataBase.Models.BotUser() { Id=1234});
             context.SaveChanges();
             context.Dispose();
             context = new RPTApi.DataBase.BotDataContext(cfg);
             var model = context.Users.FirstOrDefault();
-            bool expected = true;
-            bool actual = dt == model.LastQuerry;
-            Assert.AreEqual(expected, actual);
+            Assert.IsNotNull(model);
+        }
+        [Test]
+        public void Db_ForeighnKeyGenerated_NotNull()
+        {
+
+            RPTApi.DataBase.BotDataContext context = new RPTApi.DataBase.BotDataContext(cfg);
+            context.Users.Add(new RPTApi.DataBase.Models.BotUser { Id = 5050 });
+            context.Orders.Add(new RPTApi.DataBase.Models.Order
+            {
+                Barcode = "123",
+                LastQuerry = DateTime.Now,
+                Name = "Name",
+                StartTracking = DateTime.Now,
+                UserId = 5050
+            });
+            context.SaveChanges();
+            for(int i=0;i<10;i++)
+            {
+                context.Records.Add(new RPTApi.DataBase.Models.Record { DateTime = DateTime.Now.AddDays(i), Location = "SomeLocation", OrderBarcode = "123" });
+            }
+            context.SaveChanges();
+            var recs = context.Orders.First().Records;
+            Assert.IsNotNull(recs);
+            Assert.IsTrue(recs.Count > 0);
         }
     }
 }

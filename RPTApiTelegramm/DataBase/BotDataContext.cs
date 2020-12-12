@@ -17,6 +17,10 @@ namespace RPTApi.DataBase
             dbFileName = config.DataBaseFileName;
             Database.EnsureCreated();
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Models.Record>().HasKey(u => new{u.OrderBarcode,u.DateTime});
+        }
         public BotDataContext()
         {
             Database.EnsureCreated();
