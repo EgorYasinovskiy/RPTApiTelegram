@@ -9,6 +9,8 @@ namespace RPTApi.DataBase.Models
         public string Location { get; set; }
         [ForeignKey("OrderBarcode")]
         public string OrderBarcode { get; set; }
+        public string OperationType { get; set; }
+        public string OperationAttribute { get; set; }
         public virtual Order Order { get; set; }
     }
 }
