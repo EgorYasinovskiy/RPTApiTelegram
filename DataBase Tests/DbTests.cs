@@ -1,17 +1,20 @@
 ﻿using NUnit.Framework;
+using RPTApi.Telegram;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataBase_Tests
 {
     class DbTests
     {
         private RPTApi.Helpers.Config cfg;
+        private Worker worker;
         [SetUp]
         public void Setup()
         {
-            cfg = new RPTApi.Helpers.Config() { DataBaseFileName = "botDataBase.db" };
+            cfg = new RPTApi.Helpers.Config() { DataBaseFileName = "newDataBase.db",RuPostApiLogin= "jQeAXwhSPbgMna", RuPostApiPassword = "6ljfl3K9mtOJ" };
             File.Delete(cfg.DataBaseFileName);
         }
 
@@ -65,6 +68,14 @@ namespace DataBase_Tests
             var recs = context.Orders.First().Records;
             Assert.IsNotNull(recs);
             Assert.IsTrue(recs.Count > 0);
+        }
+        [Test]
+        public async Task Db_AddNewOrder_NotNull()
+        {
+            worker = new Worker(cfg);
+            await worker.RegisterNewUser(5050);
+            var res = await worker.GetOrderAsync("39687028461864", 5050);
+            Assert.IsNotNull(res);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
@@ -20,7 +22,7 @@ namespace RPTApi.Telegram
             }
         }
 
-        public async Task<DataBase.Models.Order> GetOrder(string barcode, int userId)
+        public async Task<DataBase.Models.Order> GetOrderAsync(string barcode, int userId)
         {
             var contains = dataBase.Orders.Any(x => x.Barcode == barcode);
             if (contains)
@@ -53,14 +55,23 @@ namespace RPTApi.Telegram
             config = Helpers.ConfigLoader.GetConfig(cfgFilePath);
             client = new TelegramBotClient(config.BotKey);
             dataBase = new DataBase.BotDataContext(config);
-            postApi = new RuPostApi(config.RuPostApiLogin, config.RuPostApiPassword);
+            postApi = new RuPostApi();
+            postApi.AuthorizeAsync(config.RuPostApiLogin, config.RuPostApiPassword).Wait();
+        }
+        public Worker(Helpers.Config config)
+        {
+            //client = new TelegramBotClient(config.BotKey);
+            dataBase = new DataBase.BotDataContext(config);
+            postApi = new RuPostApi();
+            postApi.AuthorizeAsync(config.RuPostApiLogin, config.RuPostApiPassword).Wait();
         }
         #region Methods-Helpers
         private async Task<DataBase.Models.Order> GetNewOrderAsync(string barcode,int userId)
         {
             var orderHistory = await postApi.GetOperationsHistoryAsync(barcode);
-            var newOrder = new DataBase.Models.Order() 
-            { 
+            var newOrder = new DataBase.Models.Order()
+            {
+                Barcode = barcode,
                 LastQuerry = DateTime.Now,
                 StartTracking = DateTime.Now,
                 UserId = userId 
@@ -68,8 +79,9 @@ namespace RPTApi.Telegram
 
             dataBase.Orders.Add(newOrder);
             await dataBase.SaveChangesAsync();
-
+          
             newOrder = dataBase.Orders.FirstOrDefault(o => o.Barcode == barcode);
+            var recs = new List<DataBase.Models.Record>();
             foreach (var record in orderHistory.OperationHistoryData)
             {
                 var newRecord = new DataBase.Models.Record()
@@ -78,17 +90,17 @@ namespace RPTApi.Telegram
                     Location = record.AddressParameters.OperationAddress.Description,
                     OrderBarcode = barcode
                 };
-
-                dataBase.Records.Add(newRecord);
+                // Avoiding of copying
+                if(!recs.Any(r=>r.DateTime==newRecord.DateTime && r.Location == newRecord.Location))
+                    recs.Add(newRecord);
             }
+            dataBase.AddRange(recs);
             await dataBase.SaveChangesAsync();
 
             return dataBase.Orders.FirstOrDefault(o => o.Barcode == barcode);
         }
         private async Task<DataBase.Models.Order> RefreshOrderInfoAsync(string barcode)
         {
-            //var order = dataBase.Orders.FirstOrDefault(x => x.Barcode == barcode);
-            
             var history = await postApi.GetOperationsHistoryAsync(barcode);
             foreach (var rec in history.OperationHistoryData)
             {

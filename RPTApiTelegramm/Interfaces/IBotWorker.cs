@@ -16,7 +16,7 @@ namespace RPTApi.Interfaces
         /// </summary>
         /// <param name="barcode"></param>
         /// <param name="userId"></param>
-        public Task<DataBase.Models.Order> GetOrder(string barcode, int userId);
+        public Task<DataBase.Models.Order> GetOrderAsync(string barcode, int userId);
         /// <summary>
         /// Remove order from user orders list (and database optionaly).
         /// </summary>
