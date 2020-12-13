@@ -89,7 +89,7 @@ namespace RPTApi.Telegram
                     DateTime = record.OperationParameters.OperDate,
                     Location = record.AddressParameters.OperationAddress.Description,
                     OperationType = record.OperationParameters.OperType.Name,
-                    OperationAttribute = record.OperationParameters.OperAttr?.Name
+                    OperationAttribute = record.OperationParameters.OperAttr?.Name,
                     OrderBarcode = barcode
                 };
                 // Avoiding of copying
