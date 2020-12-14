@@ -22,7 +22,7 @@ namespace RPTApi.Telegram.Commands
             }
             else
             {
-                await worker.SendUserMessage(userId, "Укажи какой именно трек-номер ты хочешь удалить");
+                await worker.SendUserMessage(userId, "Укажи какой именно трек-номер ты хочешь удалить",Keyboards.RemoveReplyKeyboard.Get(userId,worker.DataBase));
             }
         }
     }

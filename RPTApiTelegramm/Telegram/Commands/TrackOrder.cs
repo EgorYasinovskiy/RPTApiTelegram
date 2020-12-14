@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RPTApi.Telegram.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,14 +15,19 @@ namespace RPTApi.Telegram.Commands
             var args = messsageText.Replace(Name, string.Empty).Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (args.Length == 1)
             {
-                ////if (await worker.GetOrderAsync(args[0],userId))
-                ////    await worker.SendUserMessage(userId, "Исполнено!");
-                ////else
-                ////    await worker.SendUserMessage(userId, $"Я не могу найти трек-номер {args[0]} в списке твоих посылок. Ты уверен что не ошибся?");
+                var order = await worker.GetOrderAsync(args[0], userId);
+                if (order == null)
+                {
+                    await worker.SendUserMessage(userId, "Я не смог отследить твою посылку по этому трек-номеру, видимо его нет в базе Почты России.");
+                    return;
+                }
+                await worker.SendUserMessage(userId, order.ToMessage(worker.DataBase));
             }
             else
             {
-                await worker.SendUserMessage(userId, "Укажи какой именно трек-номер ты хочешь переименовать");
+                await worker.SendUserMessage(userId, 
+                    "Укажи какую именно посылку ты хочешь отследить. /track {трек-номер} или /track {имя}. Либо нажми на кнопки ниже, тут показаны все твои посылки.",
+                    Keyboards.TrackReplyKeyboard.Get(userId,worker.DataBase));
             }
         }
     }
