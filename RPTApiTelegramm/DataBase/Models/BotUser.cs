@@ -6,5 +6,9 @@ namespace RPTApi.DataBase.Models
     {
         public int Id { get; set; } // Inherits from TelegramUser.
         public virtual List<Order> Orders { get; set; }
+        public BotUser()
+        {
+            Orders = new List<Order>();
+        }
     }
 }

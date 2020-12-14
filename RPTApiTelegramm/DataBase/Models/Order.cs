@@ -14,5 +14,7 @@ namespace RPTApi.DataBase.Models
         public int UserId { get; set; }
         public virtual List<Record> Records { get; set; }
         public virtual BotUser User { get; set; }
+        public Order()
+        {}
     }
 }
