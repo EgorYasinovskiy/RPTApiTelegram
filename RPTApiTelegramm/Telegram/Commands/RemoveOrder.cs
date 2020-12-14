@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Telegram.Bot;
 
 namespace RPTApi.Telegram.Commands
 {
     public class RemoveOrder : ICommand
     {
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public static string Name => "/remove";
 
-        public void Execute(string messsageText, TelegramBotClient client)
+        public async Task Execute(string messsageText, Worker worker,int userId)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool IsCommand(string messageText)
-        {
-            throw new NotImplementedException();
+            messsageText = messsageText.Replace(Name, string.Empty).Trim();
+            if (messsageText.Split(' ',StringSplitOptions.RemoveEmptyEntries).Length == 1)
+            {
+                if (await worker.DeleteOrder(messsageText, userId))
+                    await worker.SendUserMessage(userId, "Исполнено!");
+                else
+                    await worker.SendUserMessage(userId, "Я не нашел среди твоих трек-номеров такого номера");
+            }
+            else
+            {
+                await worker.SendUserMessage(userId, "Укажи какой именно трек-номер ты хочешь удалить");
+            }
         }
     }
 }

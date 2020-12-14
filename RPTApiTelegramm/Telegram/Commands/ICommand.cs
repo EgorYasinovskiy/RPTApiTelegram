@@ -1,11 +1,11 @@
-﻿using Telegram.Bot;
+﻿using System.Threading.Tasks;
+using Telegram.Bot;
 
 namespace RPTApi.Telegram.Commands
 {
     public interface ICommand
     {
-        public string Name { get; set; }
-        public bool IsCommand(string messageText);
-        public void Execute(string messsageText,TelegramBotClient client);
+        public static string Name { get; }
+        public Task Execute(string messsageText, Worker worker,int userId);
     }
 }

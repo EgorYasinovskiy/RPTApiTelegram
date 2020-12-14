@@ -21,8 +21,10 @@ namespace RPTApi.Interfaces
         /// Remove order from user orders list (and database optionaly).
         /// </summary>
         /// <param name="barcode"></param>
-        public Task DeleteOrder(string barcode);
-        
+        public Task<bool> DeleteOrder(string barcode,int userId);
+        public Task<bool> RenameOrder(string barcode, string newName, int userId);
+
+
 
     }
 }

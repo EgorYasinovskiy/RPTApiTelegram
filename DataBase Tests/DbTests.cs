@@ -77,5 +77,13 @@ namespace DataBase_Tests
             var res = await worker.GetOrderAsync("39687028461864", 5050);
             Assert.IsNotNull(res);
         }
+        [Test]
+        public async Task RtpApi_OperationHistoryFault()
+        {
+            worker = new Worker(cfg);
+            await worker.RegisterNewUser(5050);
+            var res = await worker.GetOrderAsync("88005553535", 5050);
+            Assert.CatchAsync(_)-;
+        }
     }
 }
